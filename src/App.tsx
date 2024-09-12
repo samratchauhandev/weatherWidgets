@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { CssBaseline, Container, Box, Typography, Button } from "@mui/material";
+import Dashboard from "./components/Dashboard";
+import {
+  WeatherProvider,
+  useWeatherContext,
+} from "./components/WeatherContext";
 
-function App() {
+const TempToggle = () => {
+  const { unit, toggleUnit } = useWeatherContext();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box sx={{ mb: 2 }}>
+      <Typography>Current Unit: {unit}</Typography>
+      <Button variant="outlined" onClick={toggleUnit}>
+        {unit === "C" ? "Celsius => Fahrenheit" : "Fahrenheit => Celsius"}
+      </Button>
+    </Box>
   );
-}
+};
+
+const App = () => {
+  return (
+    <WeatherProvider>
+      <CssBaseline />
+      <Container  sx={{ background: '#b6b5c352', height: '100vh', overflow: 'auto' }}>
+        <Box sx={{ p: 4, textAlign: "center" }}>
+          <Typography variant="h4" gutterBottom>
+            Weather Dashboard
+          </Typography>
+          <TempToggle />
+          <Dashboard />
+        </Box>
+      </Container>
+    </WeatherProvider>
+  );
+};
 
 export default App;
